@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-require('mongoose-currency').loadType(mongoose);
-const Currency = mongoose.Types.Currency;
 const { Schema } = mongoose;
 const User = require("./user");
 
@@ -19,5 +17,6 @@ const ItemSchema = new Schema ({
 });
 const Item = mongoose.model('Item', ItemSchema);
 module.exports = Item;
+module.exports.ItemSchema=ItemSchema;
 
 

@@ -7,7 +7,6 @@ exports.checkLoggedIn = async (req,res,next) => {
         const decoded = await jwt.verify(token, process.env.SECRET_KEY);
         if(decoded)
         {
-            console.log(decoded);
             return next();
         }
         else return next({ status: 401, message: 'Unauthorized/ Please login first'});
@@ -22,7 +21,7 @@ exports.verifyUser = async (req,res,next) => {
     try{
         const token = req.headers.authorization.split(" ")[1];
         const decoded = await jwt.verify(token, process.env.SECRET_KEY);
-        console.log(decoded);
+        //console.log(decoded);
         if(decoded && decoded.id === req.params.id)
         return next();
         else return next({ status: 401, message: 'Unauthorized user'});
