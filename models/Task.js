@@ -7,8 +7,9 @@ const TaskSchema = new Schema ({
     recurrence: {
         frequency: { type: String, enum: ['Minute', 'Day', 'Month', 'Week', 'Year'], required: true},
         interval: {type: Number, default: 1},
+        month: {type: Number, default: 1},
         dayOfWeek: {type: [Number], default: 1},
-        dayOfMonth: {type: [Number], default: 1},
+        dayOfMonth: {type: Number, default: 1},
     },
     nextRun : {type: Date , default: new Date().toLocaleDateString('en-IN')},
     taskDetails: {type: ItemSchema, default: {}},

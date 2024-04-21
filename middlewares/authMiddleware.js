@@ -3,8 +3,12 @@ const jwt = require("jsonwebtoken");
 
 exports.checkLoggedIn = async (req,res,next) => {
     try{
+        console.log(req.originalUrl);
+        // const cookie = req.headers.cookie;
+        // const token_cookie = cookie.split("=")[1];
         const token = req.headers.authorization.split(" ")[1];
-        const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+        const secret = req.originalUrl.includes('refresh') ? process.env.REFRESH_SECRET_KEY : process.env.SECRET_KEY;
+        const decoded = await jwt.verify(token, secret);
         if(decoded)
         {
             return next();
@@ -19,9 +23,11 @@ exports.checkLoggedIn = async (req,res,next) => {
 
 exports.verifyUser = async (req,res,next) => {
     try{
+        // const cookie = req.headers.cookie;
+        // const token_cookie = cookie.split("=")[1];
         const token = req.headers.authorization.split(" ")[1];
-        const decoded = await jwt.verify(token, process.env.SECRET_KEY);
-        //console.log(decoded);
+        const secret = req.originalUrl.includes('refresh') ? process.env.REFRESH_SECRET_KEY : process.env.SECRET_KEY;
+        const decoded = await jwt.verify(token, secret);
         if(decoded && decoded.id === req.params.id)
         return next();
         else return next({ status: 401, message: 'Unauthorized user'});
