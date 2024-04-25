@@ -12,7 +12,7 @@ app.listen(PORT, ()=>console.log(`Server running on port ${PORT}`));
 
 //DB config
 
-mongoose.connect('mongodb://localhost:27017/expenses?retryWrites=false', {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false},
+mongoose.connect(`mongodb+srv://asrigyan:${process.env.MONGO_PW}@cluster1.uluohgb.mongodb.net/kharcha?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false},
 ()=> console.log("DB connected"));
 schedulerService.init();
 
