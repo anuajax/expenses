@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>console.log(`Server running on port ${PORT}`));
 
 //DB config
-mongoose.connect(`mongodb+srv://anuajax:${process.env.MONGOPW}@cluster1.j1pcs3e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`, {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false},
+mongoose.connect(`mongodb+srv://anuajax:${process.env.MONGOPW}@cluster1.j1pcs3e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`, {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false, connectTimeoutMS: 30000,socketTimeoutMS: 45000},
 ()=> console.log("DB connected"));
 schedulerService.init();
 
