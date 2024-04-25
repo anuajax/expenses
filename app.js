@@ -21,11 +21,12 @@ const itemsRoutes = require('./routes/items');
 const taskRoutes  = require('./routes/tasks');
 const authRoutes = require('./routes/auth');
 const oauthRoutes = require("./middlewares/oAuth");
+const notificationRoutes = require('./routes/notification');
 const errorHandler = require('./errorHandler');
 // app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json());
 
-app.use(cors());
+app.use(cors({origin: ["http://localhost:3000",'https://newsapi.org'], credentials: true}));
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -35,5 +36,6 @@ app.use("/users", diaryRoutes);
 app.use("/users", itemsRoutes.router);
 app.use("/users", taskRoutes);
 app.use("/auth/google", oauthRoutes);
+app.use("/users", notificationRoutes);
 app.use(errorHandler);
 

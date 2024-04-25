@@ -2,6 +2,20 @@ const express = require('express');
 const Item = require("../models/Item");
 const router = express.Router();
 const { checkLoggedIn, verifyUser} = require("../middlewares/authMiddleware");
+const {io, createNotification} = require("../utils/socket");
+
+io.listen(5001);
+io.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('joinRoom', (userId) => {
+        socket.join(userId);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
 
 const createItemService = async (body, param) => {
     let date = body.date;
@@ -26,10 +40,13 @@ router.get("/:id/items", checkLoggedIn, verifyUser, async (req,res,next) => {
 });
 
 router.post("/:id/items/new", checkLoggedIn, verifyUser,  async (req,res,next) => {
+    const userId = req.params.id;
     try{
-        const response = await createItemService(req.body,req.params.id);
-        if(response)
+        const response = await createItemService(req.body,userId);
+        if(response){
+            createNotification(userId, "An Item was just created.");
             return res.status(201).json('Item created successfully');
+        }
         else return next({ status: 400, message: 'Cannot save this item'});
     }
     catch(error){

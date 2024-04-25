@@ -1,16 +1,23 @@
 const { Server } = require("socket.io");
+const Notification = require('../models/Notification');
 
-const io = new Server({ 
+const io = new Server({
     cors : {
-        origin: "http://localhost:5000"
+        origin: "http://localhost:5000",
+        credentials: true
     }
 });
 
-io.on("connection", (socket) => {
-  io.emit("firstevent", "Hello This is first event");
-  socket.on("disconnect", () => {
-      console.log("disconnected")
-  })
-});
+function createNotification(userId, text) {
+    const newNotification = new Notification({
+        userId,
+        text,
+        date: new Date(),
+        read: false
+    });
+    newNotification.save().then(() => {
+        io.to(userId).emit('newNotification', newNotification);
+    }).catch(err => console.error("Failed to save notification", err));
+}
 
-io.listen(5000);
+module.exports = {createNotification, io};
