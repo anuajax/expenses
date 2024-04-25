@@ -26,7 +26,7 @@ const errorHandler = require('./errorHandler');
 // app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json());
 
-app.use(cors({origin: ["https://moneytrack-kqzs7dv8f-anurags-projects-14450284.vercel.app",'https://newsapi.org'], credentials: true}));
+app.use(cors({origin: ["https://moneytrack-kqzs7dv8f-anurags-projects-14450284.vercel.app/",'https://newsapi.org'], credentials: true}));
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
