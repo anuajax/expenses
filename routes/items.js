@@ -2,20 +2,7 @@ const express = require('express');
 const Item = require("../models/Item");
 const router = express.Router();
 const { checkLoggedIn, verifyUser} = require("../middlewares/authMiddleware");
-const {io, createNotification} = require("../utils/socket");
 
-io.listen(5001);
-io.on('connection', (socket) => {
-    console.log('New client connected');
-
-    socket.on('joinRoom', (userId) => {
-        socket.join(userId);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('Client disconnected');
-    });
-});
 
 const createItemService = async (body, param) => {
     let date = body.date;
