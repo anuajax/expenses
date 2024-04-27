@@ -31,7 +31,7 @@ router.post("/:id/items/new", checkLoggedIn, verifyUser,  async (req,res,next) =
     try{
         const response = await createItemService(req.body,userId);
         if(response){
-            createNotification(userId, "An Item was just created.");
+            // createNotification(userId, "An Item was just created.");
             return res.status(201).json('Item created successfully');
         }
         else return next({ status: 400, message: 'Cannot save this item'});
