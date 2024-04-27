@@ -26,7 +26,7 @@ const emailTemplate = (token) => { return `
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                          <a href="http://localhost:3000/login/" title="logo" target="_blank">
+                          <a href="https://moneytrack-nine.vercel.app/login" title="logo" target="_blank">
                             <img width="60" src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png" title="logo" alt="logo">
                           </a>
                         </td>
