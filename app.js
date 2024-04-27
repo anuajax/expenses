@@ -22,6 +22,7 @@ const authRoutes = require('./routes/auth');
 const oauthRoutes = require("./middlewares/oAuth");
 const notificationRoutes = require('./routes/notification');
 const errorHandler = require('./errorHandler');
+const axios = require("axios");
 // app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json());
 
@@ -38,3 +39,12 @@ app.use("/auth/google", oauthRoutes);
 app.use("/users", notificationRoutes);
 app.use(errorHandler);
 
+app.get('/api/news', async (req, res) => {
+    try {
+      const apiKey = 'b511741219fe4f9284ff6bb5f9874e97';
+      const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${apiKey}`);
+      res.status(200).json(response.data.articles);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching news' });
+    }
+  });
