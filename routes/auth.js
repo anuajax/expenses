@@ -61,6 +61,7 @@ router.post("/login", async (req,res,next) => {
             path: "/",
             expires: new Date(Date.now()+1000*3600*24),
             httpOnly: true,
+            secure: true,
             sameSite: "lax"
          })
          return res.status(200).json({user: { id: user._id, name, email, tel}, token, refreshToken});
