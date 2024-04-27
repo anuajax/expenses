@@ -45,6 +45,6 @@ app.get('/api/news', async (req, res) => {
       const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${apiKey}`);
       res.status(200).json(response);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching news' });
+      res.status(500).json({ message: 'Error fetching news', error });
     }
   });
