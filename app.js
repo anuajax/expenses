@@ -41,9 +41,8 @@ app.use(errorHandler);
 
 app.get('/api/news', async (req, res) => {
     try {
-      const apiKey = 'b511741219fe4f9284ff6bb5f9874e97';
-      const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${apiKey}`);
-      res.status(200).json(response);
+      const response = await axios.get(`http://api.mediastack.com/v1/news?access_key=${process.env.NEWSAPI}&sources=business&limit=40&countries=us`);
+      res.status(200).json(response.data);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching news', error });
     }
