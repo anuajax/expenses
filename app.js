@@ -26,7 +26,7 @@ const axios = require("axios");
 // app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json());
 
-app.use(cors({origin: "https://moneytrack-nine.vercel.app"}));
+app.use(cors({origin: "https://moneytrack-nine.vercel.app", credentials: true}));
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
