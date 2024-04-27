@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 exports.checkLoggedIn = async (req,res,next) => {
     try{
         const cookie = req.headers.cookie;
-        const token = cookie.split("=")[1];
-        //const token = req.headers.authorization.split(" ")[1];
+        //const token = cookie.split("=")[1];
+        const token = req.headers.authorization.split(" ")[1];
         const secret = req.originalUrl.includes('refresh') ? process.env.REFRESH_SECRET_KEY : process.env.SECRET_KEY;
         const decoded = await jwt.verify(token, secret);
         if(decoded)
@@ -23,8 +23,8 @@ exports.checkLoggedIn = async (req,res,next) => {
 exports.verifyUser = async (req,res,next) => {
     try{
         const cookie = req.headers.cookie;
-        const token = cookie.split("=")[1];
-        //const token = req.headers.authorization.split(" ")[1];
+        //const token = cookie.split("=")[1];
+        const token = req.headers.authorization.split(" ")[1];
         const secret = req.originalUrl.includes('refresh') ? process.env.REFRESH_SECRET_KEY : process.env.SECRET_KEY;
         const decoded = await jwt.verify(token, secret);
         if (!decoded) return next({ status: 401,message: "Token expired" });
