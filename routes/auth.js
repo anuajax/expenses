@@ -55,8 +55,8 @@ router.post("/login", async (req,res,next) => {
         let {name, email, tel} = user;
         let matchPassword = await bcrypt.compare(req.body.password, user.password);
         if(!matchPassword) return next(new ErrorResponse('Oops! Invalid credentials',401));
-         let token = jwt.sign({id: user._id, name, email, tel}, process.env.SECRET_KEY, { expiresIn: '24h' });
-         let refreshToken = jwt.sign({id: user._id, name, email, tel}, process.env.REFRESH_SECRET_KEY, { expiresIn: '24h' });
+         let token = jwt.sign({id: user._id, name, email, tel}, process.env.SECRET_KEY, { expiresIn: '10d' });
+         let refreshToken = jwt.sign({id: user._id, name, email, tel}, process.env.REFRESH_SECRET_KEY, { expiresIn: '10d' });
          res.cookie(user._id, token, {
             path: "/",
             expires: new Date(Date.now()+1000*3600*24),
@@ -74,7 +74,7 @@ router.post("/login", async (req,res,next) => {
 router.post("/users/:id/refresh", checkLoggedIn, verifyUser, async (req,res,next) => {
     try {
         let {id, name, email, tel} = req.body.user;
-        const newAccessToken = jwt.sign({id, name, email, tel}, process.env.SECRET_KEY, { expiresIn: '30s' });
+        const newAccessToken = jwt.sign({id, name, email, tel}, process.env.SECRET_KEY, { expiresIn: '10d' });
         res.status(201).send({authToken: newAccessToken});
     } catch (error) {
         next(error);
